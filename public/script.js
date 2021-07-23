@@ -50,7 +50,7 @@ function createCall(peer, pin) {
 }
 
 const openCamera = (peer, callMode, otherID = null) => {
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((stream) => {
+    navigator.mediaDevices.getUserMedia({ audio: false, video: true }).then((stream) => {
         if (callMode == 'create') {
             openRecieving(peer, stream);
         } else {
@@ -62,30 +62,26 @@ const openCamera = (peer, callMode, otherID = null) => {
 };
 
 const openRecieving = (peer, mediaStream) => {
-    console.log(peerID);
-    /*peer.on('call', function(call) {
+    peer.on('call', function(call) {
         call.answer(mediaStream);
-        call.on('stream', function(stream) {
-            console.log('stream: ', stream);
-        });
-    });*/
-    peer.on('connection', function(conn) {
-        conn.on('data', function(data) {
-            console.log('Received ', data);
+        call.on('stream', function(otherStream) {
+            document.getElementById('buttonsContainer').hidden = true;
+            document.getElementById('videoContainer').hidden = false;
+
+            const video = document.getElementById('video'); 
+            video.srcObject = otherStream;
         });
     });
 };
 
 const sendStream = (peer, mediaStream, otherID) => {
-    console.log('calling ', otherID);
-    /*var call = peer.call(otherID, mediaStream);
-    call.on('stream', function(stream) {
-        console.log('stream: ', stream);
-    });*/
+    var call = peer.call(otherID, mediaStream);
+    call.on('stream', function(otherStream) {
+        document.getElementById('buttonsContainer').hidden = true;
+        document.getElementById('videoContainer').hidden = false;
+        document.getElementById('modal').classList.remove('is-active');
 
-    var conn = peer.connect(otherID);
-    conn.on('open', function() {
-        conn.send('hi');
-        console.log('hi');
+        const video = document.getElementById('video'); 
+        video.srcObject = otherStream;
     });
 };

@@ -27,13 +27,7 @@
               Video Calling App
             </a>
           </div>
-
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-          <div class="navbar-end">
+          <div class="navbar-menu"><div class="navbar-end">
             <div class="navbar-item">
               <div class="field is-grouped">
                 <p class="control">
@@ -46,10 +40,14 @@
                 </p>
               </div>
             </div>
+          </div>
         </nav>
       </div>
       <div class="hero-body">
-        <div class="container has-text-centered">
+        <div class="container has-text-centered" id="videoContainer" hidden>
+          <video id="video" autoplay playsinline></video>
+        </div>
+        <div class="container has-text-centered" id="buttonsContainer">
           <button class="button is-large is-primary" onclick='openModal()'>
             <span class="icon is-medium">
               <i class="fas fa-phone"></i>
