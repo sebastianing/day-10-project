@@ -66,12 +66,29 @@
           </button>
         </div>
       </div>
-      <div class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-          <!-- Any other Bulma elements you want -->
+      <div class="modal" id="modal">
+        <div class="modal-background" onclick="hideModal()"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Join Call</p>
+            <button class="delete" aria-label="close" onclick="hideModal()"></button>
+          </header>
+          <section class="modal-card-body">
+            <label class="label">Enter Meeting Code</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Code" />
+            </div>
+          </section>
+          <section class="modal-card-foot">
+            <button class="button is-success is-medium is-fullwidth">
+              <span class="icon">
+                <i class="fas fa-sign-in-alt"></i>
+              </span>
+              <span>Submit</span>
+            </button>
+          </section>
         </div>
-        <button class="modal-close is-large" aria-label="close"></button>
+        
       </div>
     </section>
   </body>
