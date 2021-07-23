@@ -3,6 +3,7 @@
     "rules": "database.rules.json"
   },
   "hosting": {
+    "site": "day-10-project-1dd09",
     "public": "public",
     "ignore": [
       "firebase.json",
@@ -13,6 +14,9 @@
   "emulators": {
     "hosting": {
       "port": 8080
+    },
+    "database": {
+      "port": 9000
     }
   }
 }

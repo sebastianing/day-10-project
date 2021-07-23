@@ -63,18 +63,29 @@ const openCamera = (peer, callMode, otherID = null) => {
 
 const openRecieving = (peer, mediaStream) => {
     console.log(peerID);
-    peer.on('call', function(call) {
+    /*peer.on('call', function(call) {
         call.answer(mediaStream);
         call.on('stream', function(stream) {
             console.log('stream: ', stream);
+        });
+    });*/
+    peer.on('connection', function(conn) {
+        conn.on('data', function(data) {
+            console.log('Received ', data);
         });
     });
 };
 
 const sendStream = (peer, mediaStream, otherID) => {
     console.log('calling ', otherID);
-    var call = peer.call(otherID, mediaStream);
+    /*var call = peer.call(otherID, mediaStream);
     call.on('stream', function(stream) {
         console.log('stream: ', stream);
+    });*/
+
+    var conn = peer.connect(otherID);
+    conn.on('open', function() {
+        conn.send('hi');
+        console.log('hi');
     });
 };
