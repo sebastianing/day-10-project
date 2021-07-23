@@ -1,6 +1,6 @@
 modal = document.getElementById('modal');
 
-const joinCall = () => {
+const openModal = () => {
     modal.classList.add('is-active');
 };
 

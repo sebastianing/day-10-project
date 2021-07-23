@@ -37,7 +37,7 @@
             <div class="navbar-item">
               <div class="field is-grouped">
                 <p class="control">
-                  <a class="button is-info" href="#" onclick='joinCall()'>
+                  <a class="button is-info" href="#" onclick='openModal()'>
                     <span class="icon">
                       <i class="fas fa-phone"></i>
                     </span>
@@ -50,13 +50,13 @@
       </div>
       <div class="hero-body">
         <div class="container has-text-centered">
-          <button class="button is-large is-primary" onclick='joinCall()'>
+          <button class="button is-large is-primary" onclick='openModal()'>
             <span class="icon is-medium">
               <i class="fas fa-phone"></i>
             </span>
             <span>Join Call</span>
           </button>
-          <button class="button is-large is-primary is-outlined" onclick='createCall()'>
+          <button class="button is-large is-primary is-outlined" onclick='create()'>
             <span class="icon is-medium">
               <i class="fas fa-plus-square"></i>
             </span>
@@ -78,7 +78,7 @@
             </div>
           </section>
           <section class="modal-card-foot">
-            <button class="button is-success is-medium is-fullwidth" onClick="submitCode()">
+            <button class="button is-success is-medium is-fullwidth" onClick="join()">
               <span class="icon">
                 <i class="fas fa-sign-in-alt"></i>
               </span>

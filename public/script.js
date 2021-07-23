@@ -1,21 +1,80 @@
-var peer = new Peer();  
+const create = () => {
+    call('create');
+};
 
-peer.on('open', function(id) {
-  var Peerid = id;
-});
+const join = () => {
+    code = document.getElementById('codeInput').value;
+    firebase.database().ref('calls/' + code).get().then((snapshot) => {
+        if (snapshot.exists()) {
+            call('join', snapshot.val().peerID);
+        }
+    });
+};
 
-function joinCall() {
-    // var call = peer.call('id here', mediaStream);
-        
+const call = (callMode, otherID = null) => {
+    var peer = new Peer();
+    var mode = callMode;
 
+    peer.on('open', function (id) {
+        peerID = id;
+        if (mode == 'create') {
+            generatePin(peer);
+        } else {
+            joinCall(peer, otherID);
+        }
+    });
+};
+
+function joinCall(peer, otherID) {
+    openCamera(peer, 'join', otherID);
 }
 
 
-// console.log(peer._id); 
+function generatePin(peer) {
+    createCall(peer, Math.floor(100000 + Math.random() * 900000));
+}
 
-function createCall() {
-     firebase.database().ref("/inviteCodes").push({
-        peerID : peer.id 
-        // inviteCode : peer
+function createCall(peer, pin) {
+    firebase.database().ref('calls/' + pin).get().then((snapshot) => {
+        if (snapshot.exists()) {
+            generatePin();
+            return;
+        } else {
+            firebase.database().ref('calls/' + pin).set({
+                peerID: peerID
+            });
+            console.log(pin);
+            openCamera(peer, 'create');
+        }
     });
 }
+
+const openCamera = (peer, callMode, otherID = null) => {
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((stream) => {
+        if (callMode == 'create') {
+            openRecieving(peer, stream);
+        } else {
+            sendStream(peer, stream, otherID);
+        }
+    }).catch((e) => {
+        console.log('getUserMedia error: ', e);
+    });
+};
+
+const openRecieving = (peer, mediaStream) => {
+    console.log(peerID);
+    peer.on('call', function(call) {
+        call.answer(mediaStream);
+        call.on('stream', function(stream) {
+            console.log('stream: ', stream);
+        });
+    });
+};
+
+const sendStream = (peer, mediaStream, otherID) => {
+    console.log('calling ', otherID);
+    var call = peer.call(otherID, mediaStream);
+    call.on('stream', function(stream) {
+        console.log('stream: ', stream);
+    });
+};
